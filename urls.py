@@ -5,8 +5,8 @@ import diana.utils as utils
 
 
 router = routers.DefaultRouter()
-endpoint = utils.build_app_endpoint("media-archive")
-documentation = utils.build_app_api_documentation("media-archive", endpoint)
+endpoint = utils.build_app_endpoint("mediaarchive")
+documentation = utils.build_app_api_documentation("mediaarchive", endpoint)
 
 router.register(rf'{endpoint}/geojson/location', views.LocationViewSet, basename='place on geojson')
 router.register(rf'{endpoint}/image', views.IIIFImageViewSet, basename='image')
@@ -19,9 +19,9 @@ urlpatterns = [
     path('', include(router.urls)),
 
     # Automatically generated views
-    *utils.get_model_urls('media-archive', endpoint, 
+    *utils.get_model_urls('mediaarchive', endpoint, 
         exclude=['image', 'location', 'document', 'object3dhop', 'objectpointcloud']),
 
-    *utils.get_model_urls('media-archive', f'{endpoint}', exclude=['image', 'location', 'document', 'object3dhop', 'objectpointcloud']),
+    *utils.get_model_urls('mediaarchive', f'{endpoint}', exclude=['image', 'location', 'document', 'object3dhop', 'objectpointcloud']),
     *documentation
 ]
