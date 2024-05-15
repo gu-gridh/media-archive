@@ -1,2 +1,3 @@
-# media-archive
-An archive of media not connected to specific projects
+# Media archive
+
+This is the repository for the Django application of GRIDH's media archive, dedicated to hosting media that do not belong to bigger external projects within the Gothenburg Research Infrastructure in Digital Humanities. This project is developed as an app in Diana. It is developed as an initial clone of the [Etruscan Chamber Tombs Portal](https://github.com/gu-gridh/etruscantombs). The work is directed by Jonathan Westin. This Diana application has been developed and is maintained by Matteo Tomasini. The public frontend on which this thata is showed is developed and maintained by Tristan Bridge.
