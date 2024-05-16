@@ -13,7 +13,7 @@ class TIFFImageSerializer(DynamicDepthSerializer):
         fields = get_fields(Image, exclude=DEFAULT_FIELDS)+ ['id']
         
     
-class PlaceGeoSerializer(GeoFeatureModelSerializer):
+class LocationSerializer(GeoFeatureModelSerializer):
     
     class Meta:
         model = Location

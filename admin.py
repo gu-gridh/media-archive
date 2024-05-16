@@ -1,6 +1,5 @@
 from django.contrib.gis.db import models
 from .models import *
-from .forms import *
 from django.utils.html import format_html
 from django.contrib.gis import admin
 from django.utils.translation import gettext_lazy as _
@@ -79,7 +78,7 @@ class ImageModel(admin.ModelAdmin):
     fields              = ['image_preview', *get_fields(Image, exclude=['id'])]
     readonly_fields     = ['iiif_file', 'uuid', 'image_preview', *DEFAULT_FIELDS]
     autocomplete_fields = ['staff_member']
-    list_display        = ['thumbnail_preview', 'title', 'file', 'staff_member']
+    list_display        = ['thumbnail_preview', 'title', 'file']
     search_fields       = ['title', 'file', 'staff_member']
     
     list_per_page = 10
@@ -108,5 +107,5 @@ class ObjectPointCloudAdmin(admin.ModelAdmin):
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ['title', 'staff_member', 'size']# [*get_fields(Document, exclude=['id', 'type', 'place'])]
+    list_display = ['title', 'size']# [*get_fields(Document, exclude=['id', 'type', 'place'])]
     search_fields = ['title', 'staff_member']

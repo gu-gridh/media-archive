@@ -82,7 +82,7 @@ class Location(abstract.AbstractBaseModel):
     
     name = models.CharField(max_length=256, null=True, blank=True, verbose_name=_("name"), help_text=_("Please enter the name of the tomb"))
     geometry = models.GeometryField(verbose_name=_("geometry"), blank=True, null=True)
-    tags = models.ManyToManyField(Tag, blank=True, help_text=_("Tags attached to the tomb"))
+    tags = models.ManyToManyField(Tag, blank=True, help_text=_("Tags attached to the location"))
     
     def __str__(self) -> str:
         return self.name
@@ -95,7 +95,7 @@ class Image(abstract.AbstractTIFFImageModel):
     type_of_image = models.ManyToManyField(TypeOfImage, blank=True)
     description = RichTextField(null=True, blank=True, help_text=("Descriptive text about the images"))
     date = models.DateField(default=date.today, help_text=_("Date in which the image was taken"))
-    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True)
+    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
         return f"{self.title}"
@@ -122,7 +122,7 @@ class Object3DHop(abstract.AbstractBaseModel):
     min_max_theta = ArrayField(models.FloatField(), size=2, default=get_min_max_default, verbose_name=_("maximal horizontal camera angles"), help_text=_("Format: 2 comma-separated float numbers, e.g.: 0.0, 1.1"))
 
     preview_image = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True, blank=True)
-    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True)
+    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True, on_delete=models.SET_NULL)
 
 
     def __str__(self) -> str:
@@ -151,7 +151,7 @@ class ObjectPointCloud(abstract.AbstractBaseModel):
     look_at = ArrayField(models.FloatField(), size=3, default=list, help_text=_("Format: 3 comma-separated float numbers, e.g.: 0.0, 1.1, 2.2"))
 
     preview_image = models.ForeignKey(Image, on_delete=models.SET_NULL, null=True, blank=True)
-    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True)
+    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
         return f"{self.title}"
@@ -169,7 +169,7 @@ class Document(abstract.AbstractBaseModel):
     size = models.FloatField(null=True, blank=True, help_text=_("Document size in mb"), default=None)
     description = RichTextField(null=True, blank=True, help_text=("Descriptive text about the document"))
     date = models.DateField(default=date.today, help_text=_("Date in which the document was created"))
-    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True)
+    location = models.ForeignKey(Location, verbose_name=_("Location"), blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self) -> str:
         return f"{self.title}"
