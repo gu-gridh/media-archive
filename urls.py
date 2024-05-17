@@ -8,12 +8,12 @@ router = routers.DefaultRouter()
 endpoint = utils.build_app_endpoint("mediaarchive")
 documentation = utils.build_app_api_documentation("mediaarchive", endpoint)
 
-# router.register(rf'{endpoint}/project', views.ProjectViewSet, basename='project')
+router.register(rf'{endpoint}/project', views.ProjectViewSet, basename='project')
 router.register(rf'{endpoint}/geojson/location', views.LocationViewSet, basename='place on geojson')
 router.register(rf'{endpoint}/image', views.IIIFImageViewSet, basename='image')
 router.register(rf'{endpoint}/document', views.DocumentViewSet, basename='document')
 router.register(rf'{endpoint}/object3dhop', views.Object3DHopViewSet, basename='object 3D hop')
-router.register(rf'{endpoint}/objectpointcloud', views.ObjectPointcloudViewSet, basename='object point cloud')
+router.register(rf'{endpoint}/objectpointcloud', views.ObjectPointcloudViewSet, basename='object pointcloud')
 
 
 urlpatterns = [
@@ -21,8 +21,9 @@ urlpatterns = [
 
     # Automatically generated views
     *utils.get_model_urls('mediaarchive', endpoint, 
-        exclude=['image', 'location', 'document', 'object3dhop', 'objectpointcloud']),
+        exclude=['project', 'image', 'location', 'document', 'object3dhop', 'objectpointcloud']),
 
-    *utils.get_model_urls('mediaarchive', f'{endpoint}', exclude=['image', 'location', 'document', 'object3dhop', 'objectpointcloud']),
+    *utils.get_model_urls('mediaarchive', f'{endpoint}', 
+        exclude=['project', 'image', 'location', 'document', 'object3dhop', 'objectpointcloud']),
     *documentation
 ]

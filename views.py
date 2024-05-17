@@ -15,12 +15,13 @@ class LocationViewSet(GeoViewSet):
     filterset_fields = get_fields(models.Location, exclude=DEFAULT_FIELDS + ['geometry'])
 
 
-class ProjectViewSet(GeoViewSet):
+class ProjectViewSet(DynamicDepthViewSet):
 
     queryset = models.Project.objects.all().order_by('id')
     serializer_class = serializers.ProjectSerializer
-    filterset_fields = get_fields(models.Project, exclude=DEFAULT_FIELDS + ['geometry']) #, 'images_count', 'threedhop_count', 'pointcloud_count'])
-    search_fields = ["=name"]
+    filterset_fields = get_fields(models.Project, exclude=DEFAULT_FIELDS)#, 'images_count', 'threedhop_count', 'pointcloud_count'])
+    search_fields = ["name"]
+
 
 class IIIFImageViewSet(DynamicDepthViewSet):
     """
@@ -53,7 +54,8 @@ class ObjectPointcloudViewSet(DynamicDepthViewSet):
     
     queryset = models.ObjectPointCloud.objects.all()
     serializer_class = serializers.ObjectPointCloudSerializer
-    filterset_fields = get_fields(models.ObjectPointCloud, exclude=DEFAULT_FIELDS+['preview_image', 'camera_position', 'look_at'])
+    filterset_fields = get_fields(models.ObjectPointCloud, exclude=DEFAULT_FIELDS+['preview_image', 'camera_position', 
+                                                                                   'look_at'])
 
 
 class DocumentViewSet(DynamicDepthViewSet):

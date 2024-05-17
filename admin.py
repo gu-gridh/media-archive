@@ -19,7 +19,7 @@ from io import StringIO
 
 
 DEFAULT_LONGITUDE =  11.9900
-DEFAULT_LATITUDE  = 42.2200
+DEFAULT_LATITUDE  = 58.0000
 DEFAULT_ZOOM = 10
 MAX_ZOOM = 16
 MIN_ZOOM = 5
@@ -99,7 +99,7 @@ class ImageModel(admin.ModelAdmin):
 
 @admin.register(Object3DHop)
 class Object3DHopAdmin(admin.ModelAdmin):
-    list_display = ['title', 'scaled', 'preview_image'] # [*get_fields(Object3DHop, exclude=['id', 'author'])]
+    list_display = ['title', 'scaled', 'project'] # [*get_fields(Object3DHop, exclude=['id', 'author'])]
     search_fields = ['title', 'staff_member']
     autocomplete_fields = ['preview_image']
     

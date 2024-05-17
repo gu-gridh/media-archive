@@ -17,37 +17,9 @@ class LocationSerializer(GeoFeatureModelSerializer):
     
     class Meta:
         model = Location
-        fields = get_fields(Location, exclude=DEFAULT_FIELDS)+ ['id']
+        fields = get_fields(Location, exclude=DEFAULT_FIELDS)+ ['id', 'projects_in_location']
         geo_field = 'geometry'
         depth = 1
-
-    
-class StaffMemberSerializer(DynamicDepthSerializer):
-
-    class Meta:
-        model = StaffMember
-        fields = get_fields(StaffMember, exclude=DEFAULT_FIELDS)+ ['id']
-
-
-
-class ProjectSerializer(DynamicDepthSerializer):
-
-    # threedhop_count = SerializerMethodField()
-    # images_count = SerializerMethodField()
-    # pointcloud_count = SerializerMethodField()
-    
-    class Meta:
-        model = Project
-        fields = get_fields(Project, exclude=DEFAULT_FIELDS)+ ['id'] # , 'threedhop_count', 'images_count', 'pointcloud_count']
-    
-    # def get_images_count(self, obj):
-    #     return obj.images.count()
-    
-    # def get_threedhop_count(self, obj):
-    #     return obj.object_3Dhop.count()
-    
-    # def get_pointcloud_count(self, obj):
-    #     return obj.object_pointcloud.count()
 
 
 class Object3DHopSerializer(DynamicDepthSerializer):
@@ -69,7 +41,7 @@ class DocumentSerializer(DynamicDepthSerializer):
     
     class Meta:
         model = Document
-        fields = get_fields(Document, exclude=DEFAULT_FIELDS)+ ['id', 'type_names']
+        fields = get_fields(Document, exclude=DEFAULT_FIELDS)+ ['id']
 
     def get_type_names(self, obj):
         type_names = []
@@ -77,3 +49,13 @@ class DocumentSerializer(DynamicDepthSerializer):
         for type in types:
             type_names.append(type.text)
         return type_names
+
+
+class ProjectSerializer(DynamicDepthSerializer):
+    
+    class Meta:
+        model = Project
+        fields = get_fields(Project, exclude=DEFAULT_FIELDS)+ ['id', 'image_in_project', 
+                                                               'pointcloud_in_project', 'object3dhop_in_project',
+                                                               'document_in_project']
+
