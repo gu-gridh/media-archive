@@ -5,6 +5,7 @@ from diana.abstract.views import DynamicDepthViewSet, GeoViewSet
 from diana.abstract.models import get_fields, DEFAULT_FIELDS
 from django.db.models import Q
 from django.http import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
 import json
     
 
@@ -13,6 +14,13 @@ class LocationViewSet(GeoViewSet):
     queryset = models.Location.objects.all().order_by('id')
     filterset_fields = get_fields(models.Location, exclude=DEFAULT_FIELDS + ['geometry'])
 
+
+class ProjectViewSet(GeoViewSet):
+
+    queryset = models.Project.objects.all().order_by('id')
+    serializer_class = serializers.ProjectSerializer
+    filterset_fields = get_fields(models.Project, exclude=DEFAULT_FIELDS + ['geometry']) #, 'images_count', 'threedhop_count', 'pointcloud_count'])
+    search_fields = ["=name"]
 
 class IIIFImageViewSet(DynamicDepthViewSet):
     """

@@ -88,10 +88,22 @@ class Location(abstract.AbstractBaseModel):
         return self.name
 
 
+class Project(abstract.AbstractBaseModel):
+    name = models.CharField(max_length=256, null=True, blank=True, verbose_name=_("name"), help_text=_("Please enter the name of the project"))
+    subtitle = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_("subtitle"), default = None)
+    location = models.ForeignKey(Location, verbose_name=_("location"), blank=True, null=True, on_delete=models.SET_NULL)
+    staff_member = models.ManyToManyField(StaffMember, blank=True, help_text=_("Staff members working on the project"))
+    description = RichTextField(null=True, blank=True, help_text=("Descriptive text about the project"))
+    
+    def __str__(self) -> str:
+        return self.name
+    
+
 class Image(abstract.AbstractTIFFImageModel):
 
     title = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_("title"))
     staff_member = models.ManyToManyField(StaffMember, blank=True, verbose_name=_("Staff member"), help_text=_("staff member responsible for this piece of data"))
+    project = models.ForeignKey(Project, blank=True, null=True, on_delete=models.SET_NULL, help_text=_("Project attached to this media"))
     type_of_image = models.ManyToManyField(TypeOfImage, blank=True)
     description = RichTextField(null=True, blank=True, help_text=("Descriptive text about the images"))
     date = models.DateField(default=date.today, help_text=_("Date in which the image was taken"))
@@ -104,6 +116,7 @@ class Image(abstract.AbstractTIFFImageModel):
 class Object3DHop(abstract.AbstractBaseModel):
     title = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_("Title"))
     staff_member = models.ManyToManyField(StaffMember, blank=True, verbose_name=_("Staff member"), help_text=_("staff member responsible for this piece of data"))
+    project = models.ForeignKey(Project, blank=True, null=True, on_delete=models.SET_NULL, help_text=_("Project attached to this media"))
     url_public = models.CharField(max_length=1024, blank=True, null=True, verbose_name=_("URL for API call"))
     url_optimized = models.CharField(max_length=1024, blank=True, null=True, verbose_name=_("URL of optimized model"))
     url_full_resolution = models.CharField(max_length=1024, blank=True, null=True, verbose_name=_("URL of full resolution model"))
@@ -137,6 +150,7 @@ class ObjectPointCloud(abstract.AbstractBaseModel):
     title = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_("title"))
     subtitle = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_("subtitle"))
     staff_member = models.ManyToManyField(StaffMember, blank=True, verbose_name=_("Staff member"), help_text=_("staff member responsible for this piece of data"))
+    project = models.ForeignKey(Project, blank=True, null=True, on_delete=models.SET_NULL, help_text=_("Project attached to this media"))
     url_public = models.CharField(max_length=1024, blank=True, null=True, verbose_name=_("URL for API call"))
     url_optimized = models.CharField(max_length=1024, blank=True, null=True, verbose_name=_("URL of optimized model"))
     url_full_resolution = models.CharField(max_length=1024, blank=True, null=True, verbose_name=_("URL of full resolution model"))
@@ -164,6 +178,7 @@ class ObjectPointCloud(abstract.AbstractBaseModel):
 class Document(abstract.AbstractBaseModel):
     title = models.CharField(max_length=1024, null=True, blank=True, verbose_name=_("title"))
     staff_member = models.ManyToManyField(StaffMember, blank=True, verbose_name=_("Staff member"), help_text=_("staff member responsible for this piece of data"))
+    project = models.ForeignKey(Project, blank=True, null=True, on_delete=models.SET_NULL, help_text=_("Project attached to this media"))
     upload = models.FileField(null=True, blank=True, storage=OriginalFileStorage, upload_to=get_original_path, verbose_name=_("file"), validators=[validate_file_extension])
     type = models.ManyToManyField(TypeOfDocument, blank=True, verbose_name=_("Type of document: Report, Thesis, etc"))
     size = models.FloatField(null=True, blank=True, help_text=_("Document size in mb"), default=None)

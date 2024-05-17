@@ -72,6 +72,12 @@ class LocationAdmin(LeafletGeoAdmin, admin.ModelAdmin):
     }
 
 
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ['name', 'subtitle', 'location'] # [*get_fields(Object3DHop, exclude=['id', 'author'])]
+    search_fields = ['name', 'staff_member']
+    
+
 @admin.register(Image)
 class ImageModel(admin.ModelAdmin):
 

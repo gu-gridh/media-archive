@@ -20,13 +20,34 @@ class LocationSerializer(GeoFeatureModelSerializer):
         fields = get_fields(Location, exclude=DEFAULT_FIELDS)+ ['id']
         geo_field = 'geometry'
         depth = 1
-        
 
+    
 class StaffMemberSerializer(DynamicDepthSerializer):
 
     class Meta:
         model = StaffMember
         fields = get_fields(StaffMember, exclude=DEFAULT_FIELDS)+ ['id']
+
+
+
+class ProjectSerializer(DynamicDepthSerializer):
+
+    # threedhop_count = SerializerMethodField()
+    # images_count = SerializerMethodField()
+    # pointcloud_count = SerializerMethodField()
+    
+    class Meta:
+        model = Project
+        fields = get_fields(Project, exclude=DEFAULT_FIELDS)+ ['id'] # , 'threedhop_count', 'images_count', 'pointcloud_count']
+    
+    # def get_images_count(self, obj):
+    #     return obj.images.count()
+    
+    # def get_threedhop_count(self, obj):
+    #     return obj.object_3Dhop.count()
+    
+    # def get_pointcloud_count(self, obj):
+    #     return obj.object_pointcloud.count()
 
 
 class Object3DHopSerializer(DynamicDepthSerializer):

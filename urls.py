@@ -8,6 +8,7 @@ router = routers.DefaultRouter()
 endpoint = utils.build_app_endpoint("mediaarchive")
 documentation = utils.build_app_api_documentation("mediaarchive", endpoint)
 
+# router.register(rf'{endpoint}/project', views.ProjectViewSet, basename='project')
 router.register(rf'{endpoint}/geojson/location', views.LocationViewSet, basename='place on geojson')
 router.register(rf'{endpoint}/image', views.IIIFImageViewSet, basename='image')
 router.register(rf'{endpoint}/document', views.DocumentViewSet, basename='document')
